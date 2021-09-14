@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'userstyle.css' %}"> 
+    <title>Welcome</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Welcome to Gourmand Land  {{this_user.first_name}}</span>  
+            
+        <a href='/restaurants/all'>See all the restaurants and reviews</a>
+        <a href='/restaurants' class="badge badge-secondary">Enter a new restaurant to review</a>
+        <a href='/logout'>Log Out</a>
+    </nav>
+    
+    
+    
+    <div class="container">
+        <div class="user1">
+            <h4>Your Profile</h4>
+            <p>Name: {{this_user.first_name}} {{this_user.last_name}}</p>
+            <p>Email address: {{this_user.email}}</p>
+        </div> 
+        <img id="profilepic" src="{{ this_user.image.url }}" alt="profile pic">
+        <div class="user1">
+            <form action="/uploadimage/{{this_user.id}}" method="Post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="image">Upload a profile picture</label>
+                    <input type="file" name="image" accept="image/*">
+                </div>
+                <button class="btn btn-info">Upload</button>
+                
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h5>See what you have contributed to Gourmand Land: </h5>
+        <div>
+            <h6 class="title">Restaurants entered: </h6>
+            {% for restaurant in this_user.restaurants_entered.all %}
+            <ul>{{restaurant.name}}</ul>
+            {% endfor %}
+        </div>
+        <div id="reviews">
+            <h6 class="title">Reviews created:</h6>
+            {% for review in this_user.user_reviews.all %}
+                <h6 class="title">for {{review.reviewed_rest.name}} </h6>            
+                <ul>rating: {{review.rating}}
+                    {% if review.rating == 0 %}
+                    <img src="{% static 'img/0_5star.png' %}" width="100px" alt="0 Star">
+                    {% elif review.rating <= 1.0 %}
+                    <img src="{% static 'img/1star.png' %}" width="100px" alt="1 Star">
+                    {% elif review.rating <= 2.0 %}
+                    <img src="{% static 'img/2stars.png' %}" width="100px" alt="2 Stars">
+                     {% elif review.rating <= 3.0 %}
+                    <img src="{% static 'img/3stars.png' %}" width="100px" alt="3 Stars">
+                    {% elif review.rating <= 4.0 %}
+                    <img src="{% static 'img/4stars.png' %}" width="100px" alt="4 Stars">
+                    {% elif review.rating <= 5.0 %}
+                    <img src="{% static 'img/5stars.png' %}" width="100px" alt="5 Stars">
+                    {% endif %}
+                    </ul>
+            
+            <ul>review: {{review.content}}   </ul> 
+            {% endfor %}
+        </div>
+        
+        
+
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <p class="footer">Copyright©GourmandLand2021</p>
+        <p class="footer">julieyangarchi@gmail.com</p>
+    </nav>
+</body>
+</html>

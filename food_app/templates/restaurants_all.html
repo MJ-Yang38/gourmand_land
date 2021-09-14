@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'allreststyle.css' %}"> 
+    <title>Welcome</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        
+        <span class="navbar-brand mb-0 h1">Welcome to Gourmand Land    
+            {{user.first_name}} 
+            <a href='/restaurants/userprofile/{{user.id}}'>Your Profile</a></span>
+            
+        <a href='/restaurants/all'>See all the restaurants and reviews</a>
+        <a href='/logout'>Log Out</a>
+    </nav>
+    
+    
+    
+    <div class="container-fluid"> 
+        <h3>All the restaurants reviewed</h3> 
+            {% for restaurant in all_restaurants%}
+        
+            <div class="part">
+                <h4>{{restaurant.name}}</h4>
+                <h6><a href='/restaurants/{{restaurant.id}}'>More</a></h6>
+                <p><span>Type:</span>{{restaurant.type}}</p>
+                <p><span>Popular items:</span> {{restaurant.popular_items}}</p>
+            </div>
+            
+                {% if user.id == restaurant.creater.id %}
+            <div class="part" >
+                <form action="/restaurants/delete/{{restaurant.id}}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </div>
+                {% endif %}
+                {%endfor%}
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <p class="footer">Copyright©GourmandLand2021</p>
+        <p class="footer">julieyangarchi@gmail.com</p>
+    </nav>
+</body>
+</html>

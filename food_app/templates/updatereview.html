@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'loginstyle.css' %}"> 
+    <title>Update your review</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        
+        <span class="navbar-brand mb-0 h1">Welcome to Gourmand Land    
+            {{user.first_name}} 
+            <a href='/restaurants/userprofile/{{user.id}}'>Your Profile</a></span>
+            
+        <a href='/restaurants/all'>See all the restaurants and reviews</a>
+        <a href='/logout'>Log Out</a>
+    </nav>
+    <div class="container-fluid">
+        <form action="/restaurants/review/update/{{this_review.id}}/{{this_rest.id}}" method="post">
+            <h3>Update your review for {{this_rest.name}}</h3>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="rating">Rating(0-5 scale)</label>
+                <input type="number" name="rating">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea name="content"></textarea>
+            </div>
+           
+            <button class="btn btn-info">Update</button>
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                
+            </div>
+            {% endif %}
+        </form>
+        
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <p class="footer">Copyright©GourmandLand2021</p>
+        <p class="footer">julieyangarchi@gmail.com</p>
+    </nav>
+</body>
+</html>

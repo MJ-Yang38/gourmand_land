@@ -1,0 +1,42 @@
+*{
+    margin:0;
+    padding:0;
+}
+.container{
+    padding: 10px;
+    margin: 10px auto;
+    background-color: rgb(236, 244, 247);
+    border: 2px solid rgb(87, 167, 196);
+    
+}
+a{
+    color:rgb(87, 167, 196);
+}
+.title{
+    color:saddlebrown;
+}
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width:150px;
+    height: 100%;
+}
+#reviews{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+.checked {
+    color: orange;
+}
+.footer{
+    margin: auto;
+    color:white;
+    padding: 20px;
+}
+
+.navbar-brand{
+    padding: 20px;
+    margin-right: 20px;
+}

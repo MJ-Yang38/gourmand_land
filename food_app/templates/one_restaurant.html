@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'allstyle.css' %}">
+    <title>Welcome</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        
+        <span class="navbar-brand mb-0 h1">Welcome to Gourmand Land    
+            {{user.first_name}} 
+            <a href='/restaurants/userprofile/{{user.id}}'>Your Profile</a></span>
+            
+        <a href='/restaurants/all'>See all the restaurants and reviews</a>
+        <a href='/logout'>Log Out</a>
+    </nav>
+
+
+
+    <div class="container-fluid">
+        <div>
+            <h3>{{this_rest.name}}</h3>
+            <p>Type: {{this_rest.type}}</p>
+            <p>Popular items: {{this_rest.popular_items}}</p>
+            <p>{{this_rest.address}}</p>
+            <p>Overall Average Rating: {{rating_avg |floatformat:2}}
+                {% if  rating_avg_int == 0 %}
+                    <img src="{% static 'img/0_5star.png' %}" width="100px" alt="0 Star">
+                    {% elif  rating_avg_int <= 1.0 %}
+                    <img src="{% static 'img/1star.png' %}" width="100px" alt="1 Star">
+                    {% elif  rating_avg_int <= 2.0 %}
+                    <img src="{% static 'img/2stars.png' %}" width="100px" alt="2 Stars">
+                     {% elif  rating_avg_int <= 3.0 %}
+                    <img src="{% static 'img/3stars.png' %}" width="100px" alt="3 Stars">
+                    {% elif  rating_avg_int <= 4.0 %}
+                    <img src="{% static 'img/4stars.png' %}" width="100px" alt="4 Stars">
+                    {% elif  rating_avg_int <= 5.0 %}
+                    <img src="{% static 'img/5stars.png' %}" width="100px" alt="5 Stars">
+                {% endif %}
+
+            </p>
+        </div>
+
+        <div id='map'>{{this_rest.address}}</div>
+        
+
+    </div>
+
+
+    <div class="container-fluid">
+        <form action="/reviews/create/{{this_rest.id}}" method="post">
+            <h4>Leave a review</h4>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="rating">Rating(0-5 scale)</label>
+                <input type="number" name="rating">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea name="content"></textarea>
+            </div>
+            <button class="btn btn-info">Enter</button>
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            {% endif %}
+        </form>
+        <div id="reviews">
+            <h5>Reviews:</h5>
+            
+            {% for review in reviews %}
+            <div class="reviewpart">
+                <ul id="reviewandbtns"><span>{{review.reviewer.first_name}}</span>: {{review.content}}
+                    {% if user.id == review.reviewer.id %}
+                    <form  action="/restaurants/review/delete/{{review.id}}/{{this_rest.id}}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <form  action="/restaurants/review/{{review.id}}/{{this_rest.id}}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-sm">Update</button>
+                    </form>
+                    {% endif %}
+                </ul>
+            </div>
+                
+            
+            
+            {% endfor %}
+            
+            
+            
+        </div>
+    </div>
+    <script>// Initialize and add the map
+        function initMap() {
+
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'address': document.getElementById('map').innerHTML }, function (results, status) {
+                if (status == 'OK') {
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 16,
+                        center: results[0].geometry.location,
+                    });
+                    const marker = new google.maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map,
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }</script>
+    <script
+    
+    src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap&libraries=&v=weekly"
+    async>
+        
+    </script>
+    <nav class="navbar navbar-dark bg-dark">
+        <p class="footer">Copyright©GourmandLand2021</p>
+        <p class="footer">julieyangarchi@gmail.com</p>
+    </nav>
+</body>
+
+</html>

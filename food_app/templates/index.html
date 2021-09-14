@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'loginstyle.css' %}"> 
+    <title>Login & Registration</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Welcome to Gourmand Land!</span>
+        
+        <p>Please register and login first.</p>
+    </nav>
+    <div class="container-fluid">
+        <img src='media/bg1.jpeg' alt="background image">
+        <form action="/register" method="post">
+            <h3>Registration</h3> 
+            
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password">
+            </div>
+            <div class="form-group">
+                <label for="confirm_pw">Confirm PW</label>
+                <input type="password" name="confirm_pw">
+            </div>
+            <button class="btn btn-info">Register</button>
+        </form>
+        
+        <form action="/login" method="post">
+            <h3>Login</h3>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="user_email">Email</label>
+                <input type="text" name="user_email">
+            </div>
+            <div class="form-group">
+                <label for="pw">Password</label>
+                <input type="password" name="pw">
+            </div>
+            <button class="btn btn-info">Login</button>
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                
+            </div>
+            {% endif %}
+        </form>
+        
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <p class="footer">Copyright©GourmandLand2021</p>
+        <p class="footer">julieyangarchi@gmail.com</p>
+    </nav>
+    
+</body>
+</html>
