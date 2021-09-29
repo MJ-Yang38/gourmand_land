@@ -1,0 +1,47 @@
+*{
+    margin:0;
+    padding:0;
+}
+.container-fluid{
+    background-color: rgb(229, 246, 252);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px 10px 40px;
+    
+}
+
+a{
+    color:rgb(87, 167, 196);
+}
+#map{
+    width: 500px;
+    height: 350px;
+}
+#reviews{
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    color:rgba(216, 137, 19, 0.89);
+    width: 600px; 
+    
+}
+span{
+    font-weight: bold;
+}
+.footer{
+    margin: auto;
+    color:white;
+    padding: 20px;
+}
+#reviewandbtns{
+    display: flex;
+    justify-content:stretch;
+}
+.btn{
+    margin:0px 15px 0px 15px;
+}
+
+.navbar-brand{
+    padding: 20px;
+    margin-right: 20px;
+}

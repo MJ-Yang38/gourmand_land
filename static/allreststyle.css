@@ -1,0 +1,38 @@
+*{
+    margin:0;
+    padding:0;
+}
+.container-fluid{
+    background-color: rgb(229, 246, 252);
+    padding: 20px;
+    padding-left: 60px;
+    display:inline-block;
+}
+
+h3{
+    padding-bottom: 10px;
+}
+
+a{
+    color:rgb(87, 167, 196);
+    margin: 10px;
+}
+span{
+    font-weight: bold;
+    padding: 0px 10px 0px 10px;
+}
+.part{
+    display: inline-flex;
+    margin-bottom:20px;
+    
+}
+.footer{
+    margin: auto;
+    color:white;
+    padding: 20px;
+}
+
+.navbar-brand{
+    padding: 20px;
+    margin-right: 20px;
+}
