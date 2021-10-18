@@ -30,9 +30,9 @@ SECRET_KEY = config('SECRET_KEY')
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['3.138.137.100']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -133,9 +133,9 @@ STATIC_URL = '/static/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
-<<<<<<< HEAD
+
 MEDIA_URL = '/static/media/'
-=======
+
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
->>>>>>> 3e13d5679d141694ecae9fedb963836ab5e794fc
+
